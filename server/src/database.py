@@ -20,8 +20,13 @@ class Database:
     def new_page(self, title, content):
         self.execute("INSERT INTO pages (title, content) VALUES (?, ?)", title, content)
 
-    def get_page(self, id):
-        return self.query("SELECT * FROM pages WHERE id = ?", id)
+    def get_page(self, id=None, title=None):
+        if id is None and title is None:
+            return None
+        if id is not None:
+            return self.query("SELECT * FROM pages WHERE id = ?", id)
+        if title is not None:
+            return self.query("SELECT * FROM pages WHERE title = ?", title)
     
     def get_pages(self):
         return self.query("SELECT * FROM pages")
