@@ -1,8 +1,11 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from src.database import Database
 
+DB_PATH = "database.db"
+PORT = 5000
+
 app = Flask(__name__)
-db = Database("database.db")
+db = Database(DB_PATH)
 
 @app.route("/")
 def hello():
@@ -20,6 +23,10 @@ def get_pages():
         })
     return jsonify(pagesData)
 
+@app.route("/db")
+def get_db():
+    return send_file(DB_PATH, download_name="database.db")
+
 @app.route("/new", methods=["POST", "GET"])
 def new_page():
     if request.method == 'POST':
@@ -33,3 +40,7 @@ def new_page():
     print(title, content)
     db.new_page(title, content)
     return jsonify({"success": True})
+
+
+if __name__ == '__main__':
+    app.run(port=PORT)

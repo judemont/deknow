@@ -2,3 +2,4 @@
 *.sqlite
 *.sqlite3
 __pycache__
+friends.json
