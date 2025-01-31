@@ -11,10 +11,17 @@ def hello():
 @app.route("/pages")
 def get_pages():
     pages = db.get_pages()
-    return jsonify(pages)
+    pagesData = []
+    for page in pages:
+        pagesData.append({
+            "id": page[0],
+            "title": page[1],
+            "content": page[2]
+        })
+    return jsonify(pagesData)
 
-@app.route("new", methods=["POST", "GET"])
-def new_page(title, content):
+@app.route("/new", methods=["POST", "GET"])
+def new_page():
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
@@ -23,6 +30,6 @@ def new_page(title, content):
         title = request.args.get('title')
         content = request.args.get('content')
 
-
+    print(title, content)
     db.new_page(title, content)
     return jsonify({"success": True})

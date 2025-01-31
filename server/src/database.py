@@ -28,3 +28,6 @@ class Database:
 
     def update_page(self, id, title, content):
         self.execute("UPDATE pages SET title = ?, content = ? WHERE id = ?", title, content, id)
+
+    def delete_page(self, id):
+        self.execute("DELETE FROM pages WHERE id = ?", id)
