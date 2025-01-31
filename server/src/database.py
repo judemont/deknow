@@ -4,7 +4,7 @@ class Database:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path, check_same_thread=False)
         self.cursor = self.conn.cursor()
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS pages (id INTEGER PRIMARY KEY, title TEXT, content TEXT)")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS pages (id INTEGER PRIMARY KEY, title TEXT UNIQUE, content TEXT, last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
 
     def __del__(self):
         self.conn.close()

@@ -21,7 +21,8 @@ class Server:
                 pagesData.append({
                     "id": page[0],
                     "title": page[1],
-                    "content": page[2]
+                    "content": page[2],
+                    "last_updated": page[3]
                 })
             return jsonify(pagesData)
 
