@@ -5,8 +5,8 @@ import time
 import threading
 
 DB_PATH = "database.db"
-FRIENDS_LIST_PATH = "friends_2.json"
-PORT = 5000
+FRIENDS_LIST_PATH = "friends.json"
+PORT = 5050
 
 def auto_sync():
     while True:

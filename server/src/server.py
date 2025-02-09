@@ -9,11 +9,11 @@ class Server:
         self.setup_routes()
 
     def setup_routes(self):
-        @self.app.route("/")
+        @self.app.route("/api")
         def hi():
             return "Hello World"
 
-        @self.app.route("/pages")
+        @self.app.route("/api/pages")
         def get_pages():
             pages = self.db.get_pages()
             pagesData = []
@@ -26,11 +26,11 @@ class Server:
                 })
             return jsonify(pagesData)
 
-        @self.app.route("/db")
+        @self.app.route("/api/db")
         def get_db():
             return send_file(self.db_path, download_name="database.db")
 
-        @self.app.route("/new", methods=["POST", "GET"])
+        @self.app.route("/api/new", methods=["POST", "GET"])
         def new_page():
             if request.method == 'POST':
                 title = request.form['title']
@@ -45,7 +45,7 @@ class Server:
             self.db.new_page(title, content)
             return jsonify({"success": True})
         
-        @self.app.route("/update", methods=["POST", "GET"])
+        @self.app.route("/api/update", methods=["POST", "GET"])
         def update():
             if request.method == 'POST':
                 id = request.form['id']
