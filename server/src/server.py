@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, send_file
-from database import Database
+from .database import Database
 
 class Server:
     def __init__(self, db_path):
@@ -10,7 +10,7 @@ class Server:
 
     def setup_routes(self):
         @self.app.route("/")
-        def hello():
+        def hi():
             return "Hello World"
 
         @self.app.route("/pages")
@@ -39,7 +39,9 @@ class Server:
                 title = request.args.get('title')
                 content = request.args.get('content')
 
-            print(title, content)
+            if title is None or content is None:
+                return jsonify({"success": False, "error": "Title or content not provided"})
+
             self.db.new_page(title, content)
             return jsonify({"success": True})
         
@@ -60,6 +62,6 @@ class Server:
         
 
 
-    def start_server(self, port):
+    def start(self, port):
         self.app.run(port=port)
 
