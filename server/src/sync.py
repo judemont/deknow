@@ -15,7 +15,11 @@ class Sync:
         for friend in self.friends:
             print(f"Syncing DB with {friend}")
             print(f"{i}/{len(self.friends)}")
-            response = requests.get(f"{friend}/pages")
+            try:
+                response = requests.get(f"{friend}/pages")
+            except:
+                print(f"Failed to sync with {friend}")
+                continue
             pages = response.json()
 
             for page in pages:
