@@ -42,6 +42,23 @@ class Server:
             print(title, content)
             self.db.new_page(title, content)
             return jsonify({"success": True})
+        
+        @self.app.route("/update", methods=["POST", "GET"])
+        def update():
+            if request.method == 'POST':
+                id = request.form['id']
+                title = request.form['title']
+                content = request.form['content']
+
+            elif request.method == 'GET':
+                id = request.args.get('id')
+                title = request.args.get('title')
+                content = request.args.get('content')
+
+            self.db.update_page(id, title, content)
+            
+        
+
 
     def start_server(self, port):
         self.app.run(port=port)
