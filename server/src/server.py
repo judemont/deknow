@@ -1,10 +1,15 @@
 from flask import Flask, jsonify, request, send_file
 from .database import Database
+from flask_cors import CORS
+
 
 class Server:
     def __init__(self, db_path):
         self.db_path = db_path
         self.app = Flask(__name__)
+ 
+        CORS(self.app)  # Enable CORS for all routes
+
         self.db = Database(db_path)
         self.setup_routes()
 
@@ -63,5 +68,6 @@ class Server:
 
 
     def start(self, port):
+
         self.app.run(port=port)
 
